@@ -31,6 +31,9 @@ Keep every recipe page consistent and ensure the homepage always lists all avail
   - Example: `git add . && git commit -m "Add <recipe title> and update homepage" && git push`
 - Netlify deploys automatically from GitHub. No build step is required. The publish directory is the repo root (`.`).
 
+### Reference template
+- See `Project Context/template.md` for the canonical style guide, HTML structure, required features, and JS behavior that every recipe must implement.
+
 ### Promise (assistant behavior)
 Whenever asked to create a new recipe in this repository:
 - Also add or update the corresponding link on the homepage (`index.html`) in the same change set.

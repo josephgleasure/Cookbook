@@ -539,9 +539,15 @@
             </div>
           </li>
         </ol>
+        <div class="sticky-controls">
+          <button id="prev" class="btn" aria-label="Previous step">Prev</button>
+          <button id="next" class="btn-primary" aria-label="Next step">Next</button>
+          <button id="resetChecks" class="btn" aria-label="Reset checkboxes">Reset</button>
+        </div>
       </article>
     </div>
   </main>
+<script>const cookBtn=document.getElementById('cookBtn');cookBtn&&cookBtn.addEventListener('click',()=>{const e=document.body.classList.toggle('cook-mode');cookBtn.textContent=e?'Exit Cook Mode':'Start Cook Mode'});const steps=Array.from(document.querySelectorAll('#steps li'));let idx=0;function setActive(e){steps.length&&(idx=Math.max(0,Math.min(steps.length-1,e)),steps.forEach((e,t)=>e.classList.toggle('active',t===idx)),steps[idx].scrollIntoView({behavior:'smooth',block:'center'}))}const nextBtn=document.getElementById('next'),prevBtn=document.getElementById('prev'),resetBtn=document.getElementById('resetChecks');nextBtn&&nextBtn.addEventListener('click',()=>setActive(idx+1));prevBtn&&prevBtn.addEventListener('click',()=>setActive(idx-1));resetBtn&&resetBtn.addEventListener('click',()=>{document.querySelectorAll('input[type=\"checkbox\"]').forEach(e=>e.checked=!1),setActive(0)});function attachTimer(e,t,n,o,c){const d=document.getElementById(e),a=document.getElementById(t),i=document.getElementById(n),l=document.getElementById(o);let s=null,r=null;function m(){const e=Date.now(),t=Math.max(0,r-e),n=Math.floor(t/6e4),o=Math.floor(t%6e4/1e3);l.textContent=`${String(n).padStart(2,'0')}:${String(o).padStart(2,'0')}`,t<=0&&(clearInterval(s),s=null,l.textContent=c+' done',alert(c+' finished'))}d&&d.addEventListener('click',()=>{const e=Math.max(1,parseInt(i.value||'1',10));r=Date.now()+60e3*e,m(),clearInterval(s),s=setInterval(m,250)}),a&&a.addEventListener('click',()=>{clearInterval(s),s=null,l.textContent=''})}let wakeLock=null;async function toggleWakeLock(){try{const e=document.getElementById('wakeBtn');if(!('wakeLock'in navigator))return void alert('Screen wake lock is not available on this device or browser.');if(wakeLock){await wakeLock.release(),wakeLock=null,e&&(e.textContent='Keep Screen Awake');return}wakeLock=await navigator.wakeLock.request('screen'),e&&(e.textContent='Screen Awake On'),wakeLock.addEventListener('release',()=>{e&&(e.textContent='Keep Screen Awake')})}catch(e){console.warn('Wake Lock error',e),alert('Screen wake lock may not be available on this device or browser.')}}const wakeBtn=document.getElementById('wakeBtn');wakeBtn&&wakeBtn.addEventListener('click',toggleWakeLock);document.addEventListener('visibilitychange',async()=>{if(wakeLock&&document.visibilityState==='visible')try{wakeLock=await navigator.wakeLock.request('screen')}catch(e){}});setActive(0);</script>
 </body>
 </html>
 
