@@ -11,6 +11,10 @@ Keep every recipe page consistent and ensure the homepage always lists all avail
    - Step checklists with Prev/Next navigation
    - Optional timers per step (when the recipe benefits from them)
    - Keep Screen Awake button (Wake Lock when supported)
+   - Home navigation button in the header actions:
+     ```html
+     <a href="/" class="btn" aria-label="Home">Home</a>
+     ```
 2. Update the homepage links in `index.html`:
    - Append a new list item inside the main `<ul>` with this pattern (adjust title and tags as needed):
      ```html
