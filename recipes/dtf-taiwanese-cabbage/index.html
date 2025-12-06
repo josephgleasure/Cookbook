@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Din Tai Fung Taiwanese Cabbage with Garlic</title>
+  <link rel="icon" href="/favicon.svg" />
+  <style>
+    :root {
+      --bg: #0f1216;
+      --card: #171a1f;
+      --text: #e8eaed;
+      --muted: #a9b0bb;
+      --accent: #8bd3ff;
+      --accent-2: #ffb86b;
+      --accent-soft: rgba(139, 211, 255, 0.15);
+      --border: #2a2f36;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(8px);
+      background: color-mix(in oklab, var(--bg) 85%, transparent);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 0;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin: 0 0 4px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(8px);
+      white-space: nowrap;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .btn,
+    .btn-primary {
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      background: var(--card);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: var(--shadow);
+      transition: transform .06s ease, background .2s ease, border-color .2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 20%, var(--card)), var(--card));
+      border-color: color-mix(in oklab, var(--accent) 30%, var(--border));
+      font-weight: 600;
+    }
+
+    .btn:hover,
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.55);
+    }
+
+    .btn:active,
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow);
+    }
+
+    main {
+      padding-top: 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .card {
+      background: radial-gradient(circle at top left, rgba(248, 180, 54, 0.06), transparent),
+        var(--card);
+      border-radius: 18px;
+      padding: 16px 16px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: var(--shadow);
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      margin: 0 0 10px;
+    }
+
+    .card h3 {
+      font-size: 0.95rem;
+      margin: 14px 0 6px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+    }
+
+    .ingredients ul,
+    .steps ol {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 6px;
+    }
+
+    .ingredients li,
+    .steps li {
+      display: grid;
+      grid-template-columns: min-content 1fr;
+      gap: 8px;
+      align-items: flex-start;
+      font-size: 0.94rem;
+    }
+
+    .ingredients input[type="checkbox"],
+    .steps input[type="checkbox"] {
+      margin-top: 3px;
+      cursor: pointer;
+    }
+
+    .steps li {
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+    }
+
+    .steps li.active {
+      border-color: var(--accent-2);
+      background: var(--accent-soft);
+    }
+
+    .steps li small {
+      display: block;
+      color: var(--muted);
+      font-size: 0.8rem;
+      margin-top: 4px;
+    }
+
+    .note {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    footer {
+      margin-top: 18px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    body.cook-mode header {
+      position: static;
+      border-bottom-color: transparent;
+      background: transparent;
+    }
+
+    body.cook-mode .meta {
+      display: none;
+    }
+
+    body.cook-mode main {
+      padding-top: 8px;
+    }
+
+    body.cook-mode .steps li {
+      font-size: 1rem;
+      padding: 10px 12px;
+    }
+
+    body.cook-mode .card {
+      border-width: 2px;
+    }
+
+    @media (min-width: 850px) {
+      .grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <div>
+        <h1>Din Tai Fung Taiwanese Cabbage with Garlic</h1>
+        <div class="meta">
+          <span class="pill">Side dish</span>
+          <span class="pill">Total ~15 to 20 minutes</span>
+          <span class="pill">Hands on ~10 minutes</span>
+        </div>
+      </div>
+      <div class="actions">
+        <a href="/" class="btn" aria-label="Home">Home</a>
+        <button id="cookBtn" class="btn-primary">Start Cook Mode</button>
+        <button id="wakeBtn" class="btn" title="Prevent screen sleep on supported phones">
+          Keep Screen Awake
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container grid">
+      <article class="card ingredients">
+        <h2>Ingredients</h2>
+        <p class="note">Quick high-heat stir-fry; keep ingredients ready.</p>
+        <h3>Stir-Fry</h3>
+        <ul>
+          <li>
+            <input type="checkbox" />
+            <div>1 large head Taiwanese cabbage, cut into 2 to 3-inch pieces</div>
+          </li>
+          <li>
+            <input type="checkbox" />
+            <div>5 garlic cloves, thinly sliced</div>
+          </li>
+          <li>
+            <input type="checkbox" />
+            <div>1/4 cup neutral oil (e.g., avocado, canola)</div>
+          </li>
+          <li>
+            <input type="checkbox" />
+            <div>1/2 teaspoon kosher salt (to taste)</div>
+          </li>
+          <li>
+            <input type="checkbox" />
+            <div>1 tablespoon Shaoxing wine</div>
+          </li>
+          <li>
+            <input type="checkbox" />
+            <div>1 teaspoon chicken bouillon powder (or to taste)</div>
+          </li>
+          <li>
+            <input type="checkbox" />
+            <div>1/2 teaspoon white pepper</div>
+          </li>
+        </ul>
+      </article>
+
+      <article class="card steps">
+        <h2>Steps</h2>
+        <ol id="steps">
+          <li class="active">
+            <input type="checkbox" />
+            <div>
+              <strong>Prep all ingredients</strong>
+              <small>
+                Cut cabbage into large bite-size pieces. Slice garlic thinly. Measure seasonings so they’re ready.
+              </small>
+            </div>
+          </li>
+
+          <li>
+            <input type="checkbox" />
+            <div>
+              <strong>Heat oil and bloom garlic</strong>
+              <small>
+                Heat oil in a large wok over high heat until shimmering. Add garlic and stir 10 to 20 seconds until just fragrant (do not brown).
+              </small>
+            </div>
+          </li>
+
+          <li>
+            <input type="checkbox" />
+            <div>
+              <strong>Stir-fry cabbage with salt</strong>
+              <small>
+                Add cabbage and salt. Stir-fry 3 to 4 minutes until it begins to wilt and release moisture.
+              </small>
+            </div>
+          </li>
+
+          <li>
+            <input type="checkbox" />
+            <div>
+              <strong>Reduce moisture; add Shaoxing wine</strong>
+              <small>
+                Push cabbage to one side to let excess liquid evaporate briefly, then pour Shaoxing wine around the edge of the wok; let it sizzle and reduce.
+              </small>
+            </div>
+          </li>
+
+          <li>
+            <input type="checkbox" />
+            <div>
+              <strong>Season and finish</strong>
+              <small>
+                Stir in chicken bouillon powder and white pepper. Cook 2 to 3 minutes more until tender but still crisp. Taste and adjust salt.
+              </small>
+            </div>
+          </li>
+
+          <li>
+            <input type="checkbox" />
+            <div>
+              <strong>Serve</strong>
+              <small>
+                Plate immediately and serve hot as a side.
+              </small>
+            </div>
+          </li>
+        </ol>
+        <div class="sticky-controls">
+          <button id="prev" class="btn" aria-label="Previous step">Prev</button>
+          <button id="next" class="btn-primary" aria-label="Next step">Next</button>
+          <button id="resetChecks" class="btn" aria-label="Reset checkboxes">Reset</button>
+        </div>
+      </article>
+    </div>
+  </main>
+<script>const cookBtn=document.getElementById('cookBtn');cookBtn&&cookBtn.addEventListener('click',()=>{const e=document.body.classList.toggle('cook-mode');cookBtn.textContent=e?'Exit Cook Mode':'Start Cook Mode'});const steps=Array.from(document.querySelectorAll('#steps li'));let idx=0;function setActive(e){steps.length&&(idx=Math.max(0,Math.min(steps.length-1,e)),steps.forEach((e,t)=>e.classList.toggle('active',t===idx)),steps[idx].scrollIntoView({behavior:'smooth',block:'center'}))}const nextBtn=document.getElementById('next'),prevBtn=document.getElementById('prev'),resetBtn=document.getElementById('resetChecks');nextBtn&&nextBtn.addEventListener('click',()=>setActive(idx+1));prevBtn&&prevBtn.addEventListener('click',()=>setActive(idx-1));resetBtn&&resetBtn.addEventListener('click',()=>{document.querySelectorAll('input[type=\"checkbox\"]').forEach(e=>e.checked=!1),setActive(0)});let wakeLock=null;async function toggleWakeLock(){try{const e=document.getElementById('wakeBtn');if(!('wakeLock'in navigator))return void alert('Screen wake lock is not available on this device or browser.');if(wakeLock){await wakeLock.release(),wakeLock=null,e&&(e.textContent='Keep Screen Awake');return}wakeLock=await navigator.wakeLock.request('screen'),e&&(e.textContent='Screen Awake On'),wakeLock.addEventListener('release',()=>{e&&(e.textContent='Keep Screen Awake')})}catch(e){console.warn('Wake Lock error',e),alert('Screen wake lock may not be available on this device or browser.')}}const wakeBtn=document.getElementById('wakeBtn');wakeBtn&&wakeBtn.addEventListener('click',toggleWakeLock);document.addEventListener('visibilitychange',async()=>{if(wakeLock&&document.visibilityState==='visible')try{wakeLock=await navigator.wakeLock.request('screen')}catch(e){}});setActive(0);</script>
+</body>
+</html>
+
+
